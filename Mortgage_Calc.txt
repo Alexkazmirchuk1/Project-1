@@ -1,0 +1,66 @@
+"""
+program name: Mortgage_Calc
+programmer:   Alex Kazmirchuk
+Date:         6/30/2023
+Version:      1.0
+Description:  This program calculates and displays the mortgage payment
+after being given the amount, term, and interest.
+"""
+
+import tkinter
+
+
+class MortgageCalc:
+    def __init__(self):
+        self.main_window = tkinter.Tk()
+# creates the 5 different pop-ups
+        self.amount_frame = tkinter.Frame(self.main_window)
+        self.term_frame = tkinter.Frame(self.main_window)
+        self.rate_frame = tkinter.Frame(self.main_window)
+        self.calc_frame = tkinter.Frame(self.main_window)
+        self.button_frame = tkinter.Frame(self.main_window)
+# asks for the principal amount in the first pop up
+        self.amount_label = tkinter.Label(self.amount_frame, text='Enter a principal amount: $')
+        self.amount_entry = tkinter.Entry(self.amount_frame, width=10)
+        self.amount_label.pack(side='left')
+        self.amount_entry.pack(side='left')
+# asks for the term length
+        self.term_label = tkinter.Label(self.term_frame, text='Enter a term in years:')
+        self.term_entry = tkinter.Entry(self.term_frame, width=10)
+        self.term_label.pack(side='left')
+        self.term_entry.pack(side='left')
+# asks for the interest rate
+        self.rate_label = tkinter.Label(self.rate_frame, text='Enter an interest rate as a %:')
+        self.rate_entry = tkinter.Entry(self.rate_frame, width=10)
+        self.rate_label.pack(side='left')
+        self.rate_entry.pack(side='left')
+# creates and packs the widgets for calculating monthly mortgage
+        self.result_label = tkinter.Label(self.calc_frame, text='Calculate monthly mortgage:')
+        self.avg = tkinter.StringVar()
+        self.avg_label = tkinter.Label(self.calc_frame, textvariable=self.avg)
+        self.result_label.pack(side='left')
+        self.avg_label.pack(side='left')
+# creates the two buttons calculate and quit
+        self.calc_button = tkinter.Button(self.button_frame, text='Calculate',
+            command=self.calc_morg)
+        self.quit_button = tkinter.Button(self.button_frame, text='Quit',
+            command=self.main_window.destroy)
+        self.calc_button.pack(side='left')
+        self.quit_button.pack(side='left')
+        self.amount_frame.pack()
+        self.term_frame.pack()
+        self.rate_frame.pack()
+        self.calc_frame.pack()
+        self.button_frame.pack()
+        tkinter.mainloop()
+# creates a method for finding monthly payment
+    def calc_morg(self):
+# stores the inputs in variables
+        self.principal = float(self.amount_entry.get())
+        self.term = float(self.term_entry.get())*12
+        self.rate = float(self.rate_entry.get())/1200
+# calculations for monthly payments
+        self.monthlyPayment = (self.principal * self.rate)/(1-(self.rate+1)**(-self.term))
+        self.avg.set(self.monthlyPayment)
+
+mortage = MortgageCalc()
